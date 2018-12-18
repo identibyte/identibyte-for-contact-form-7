@@ -1,12 +1,12 @@
 <?php
 /*
-Plugin Name: Identibyte for Contact Form 7
-Plugin URI: https://identibyte.com/wordpress-plugin
-Description: Detect and block disposable email addresses in your Contact 7 Forms.
-Author: Identibyte
-Author URI: https://identibyte.com
-Version: 1.0.0
-*/
+   Plugin Name: Identibyte for Contact Form 7
+   Plugin URI: https://identibyte.com/wordpress-plugin
+   Description: Detect and block disposable email addresses in your Contact 7 Forms.
+   Author: Identibyte
+   Author URI: https://identibyte.com
+   Version: 1.0.0
+ */
 
 /* Ensure Contact Form 7 is installed and activated. */
 add_action('admin_init', 'cf7_identibyte_validate_install');
@@ -72,7 +72,10 @@ function cf7_identibyte_validate_email_filter($result, $tag) {
  */
 function cf7_identibyte_make_check($data) {
     $token = get_option("cf7_identibyte_token");
-    $options = array("http" => array());
+    $options = array("http" => array(
+        "method" => "GET",
+        "header" => "User-Agent: " . userAgent()
+    ));
     $context = stream_context_create($options);
 
     $url = "https://identibyte.com/check/" . $data . "?api_token=" . $token;
@@ -130,22 +133,33 @@ function cf7_identibyte_render_admin_page() {
         <div>
             <form method="post" action="options.php">
                 <?php settings_fields( 'cf7_identibyte_settings'); ?>
-                <h2>Account Credentials</h2>
+                <h2>Account credentials</h2>
                 <p>
-                    Enter your Identibyte API token below. You can get
-                    an API token in your
+                    You can use Identibyte for free without an API
+                    token. Entering an API token <br/> allows you to
+                    use Identibyte more often. You can get an API
+                    token in your
                     <a href="https://identibyte.com/dashboard" target="_blank">
-                        dashboard
+                        your <br/> dashboard
                     </a>.
-                    <br/>
-                    If you don't have an account,
+                    Learn more about what free and paid options are
+                    available
                     <a href="https://identibyte.com/signup" target="_blank">
-                        sign up here
-                    </a>, it's free to try.
+                        here
+                    </a>.
                 </p>
                 <div>
                     <label for="cf7_identibyte_token">
-                        <strong>API token: </strong>
+                        <strong>Your User-Agent: </strong>
+                    </label>
+                    <br/>
+                    <p>
+                        <?php echo userAgent(); ?>
+                    </p>
+                </div>
+                <div>
+                    <label for="cf7_identibyte_token">
+                        <strong>API token (optional): </strong>
                     </label>
                     <br/>
                     <input
@@ -159,4 +173,13 @@ function cf7_identibyte_render_admin_page() {
         </div>
     </div>
 <?php
+}
+
+function userAgent() {
+    $plugin_version = "1.0.0";
+    $blog_name = get_bloginfo('name');
+    $blog_url = get_bloginfo('url');
+    $user_agent = "cf7-identibyte/{$plugin_version} ({$blog_name} {$blog_url})";
+
+    return $user_agent;
 }
