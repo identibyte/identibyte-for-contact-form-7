@@ -59,7 +59,7 @@ function cf7_identibyte_validate_email_filter($result, $tag) {
         $disposable = $check->email->disposable;
 
         if($disposable === true) {
-            $result->invalidate("Please check your email address and try again.");
+            $result->invalidate($tag, "Please check your email address and try again.");
         }
     }
 
@@ -71,16 +71,30 @@ function cf7_identibyte_validate_email_filter($result, $tag) {
  * Make a check to the Identibyte API.  Return the full response.
  */
 function cf7_identibyte_make_check($data) {
-    $token = get_option("cf7_identibyte_token");
-    $options = array("http" => array());
+    $ua = cf7_identibyte_user_agent();
+    $token = get_option("cf7_identibyte_token", "");
+    $api_token = !empty($token) ? "?api_token={$token}" : "";
+
+    $options = array("http" => array(
+        "method" => "GET",
+        "header" => "User-Agent: " . $ua
+    ));
     $context = stream_context_create($options);
 
-    $url = "https://identibyte.com/check/" . $data . "?api_token=" . $token;
-
+    $url = "https://identibyte.com/check/" . $data . $api_token;
     $request = file_get_contents($url, false, $context);
     $response = json_decode($request);
 
     return $response;
+}
+
+function cf7_identibyte_user_agent() {
+    $plugin_version = "1.0.0";
+    $blog_name = get_bloginfo('name');
+    $blog_url = get_bloginfo('url');
+    $user_agent = "cf7-identibyte/{$plugin_version} ({$blog_name} {$blog_url})";
+
+    return $user_agent;
 }
 
 /* Register admin page and settings */
@@ -132,17 +146,30 @@ function cf7_identibyte_render_admin_page() {
                 <?php settings_fields( 'cf7_identibyte_settings'); ?>
                 <h2>Account Credentials</h2>
                 <p>
-                    Enter your Identibyte API token below. You can get
-                    an API token in your
+                    You can use Identibyte for free without an API
+                    token. Entering an API token <br/> allows you to
+                    use Identibyte more often. You can get an API
+                    token in your
                     <a href="https://identibyte.com/dashboard" target="_blank">
-                        dashboard
+                        your <br/> dashboard
                     </a>.
-                    <br/>
-                    If you don't have an account,
+                    Learn more about what free and paid options are
+                    available
                     <a href="https://identibyte.com/signup" target="_blank">
-                        sign up here
-                    </a>, it's free to try.
+                        here
+                    </a>.
                 </p>
+                <div>
+                    <label for="cf7_identibyte_token">
+                        <strong>Your User-Agent: </strong>
+                    </label>
+                    <br/>
+                    <p>
+                        <code>
+                            <?php echo cf7_identibyte_user_agent(); ?>
+                        </code>
+                    </p>
+                </div>
                 <div>
                     <label for="cf7_identibyte_token">
                         <strong>API token: </strong>
