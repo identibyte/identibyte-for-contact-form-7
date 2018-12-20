@@ -59,7 +59,7 @@ function cf7_identibyte_validate_email_filter($result, $tag) {
         $disposable = $check->email->disposable;
 
         if($disposable === true) {
-            $result->invalidate("Please check your email address and try again.");
+            $result->invalidate($tag, "Please check your email address and try again.");
         }
     }
 
@@ -71,19 +71,30 @@ function cf7_identibyte_validate_email_filter($result, $tag) {
  * Make a check to the Identibyte API.  Return the full response.
  */
 function cf7_identibyte_make_check($data) {
-    $token = get_option("cf7_identibyte_token");
+    $ua = cf7_identibyte_user_agent();
+    $token = get_option("cf7_identibyte_token", "");
+    $api_token = !empty($token) ? "?api_token={$token}" : "";
+
     $options = array("http" => array(
         "method" => "GET",
-        "header" => "User-Agent: " . userAgent()
+        "header" => "User-Agent: " . $ua
     ));
     $context = stream_context_create($options);
 
-    $url = "https://identibyte.com/check/" . $data . "?api_token=" . $token;
-
+    $url = "https://identibyte.com/check/" . $data . $api_token;
     $request = file_get_contents($url, false, $context);
     $response = json_decode($request);
 
     return $response;
+}
+
+function cf7_identibyte_user_agent() {
+    $plugin_version = "1.0.0";
+    $blog_name = get_bloginfo('name');
+    $blog_url = get_bloginfo('url');
+    $user_agent = "cf7-identibyte/{$plugin_version} ({$blog_name} {$blog_url})";
+
+    return $user_agent;
 }
 
 /* Register admin page and settings */
@@ -154,7 +165,9 @@ function cf7_identibyte_render_admin_page() {
                     </label>
                     <br/>
                     <p>
-                        <?php echo userAgent(); ?>
+                        <code>
+                            <?php echo cf7_identibyte_user_agent(); ?>
+                        </code>
                     </p>
                 </div>
                 <div>
@@ -173,13 +186,4 @@ function cf7_identibyte_render_admin_page() {
         </div>
     </div>
 <?php
-}
-
-function userAgent() {
-    $plugin_version = "1.0.0";
-    $blog_name = get_bloginfo('name');
-    $blog_url = get_bloginfo('url');
-    $user_agent = "cf7-identibyte/{$plugin_version} ({$blog_name} {$blog_url})";
-
-    return $user_agent;
 }
