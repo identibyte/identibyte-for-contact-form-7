@@ -42,6 +42,12 @@ And that's it! Now your signup forms are intelligent and can detect
 and block users signing up or submitting information that have a
 disposable email address.
 
+=== Screenshots ===
+
+1. Prevent form submissions when users enter a disposable email address.
+
+2. Easily enable Identibyte on any Contact Form 7 email field.
+
 === Installation ===
 
 The best way to install Identibyte for Contact Form 7 is through your
