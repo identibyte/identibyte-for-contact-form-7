@@ -1,15 +1,16 @@
 <?php
 /*
-   Plugin Name: Identibyte for Contact Form 7
-   Plugin URI: https://identibyte.com/wordpress-plugin
-   Description: Detect and block disposable email addresses in your Contact 7 Forms.
-   Author: Identibyte
-   Author URI: https://identibyte.com
-   Version: 1.0.0
- */
+ * Plugin Name: Identibyte for Contact Form 7
+ * Plugin URI: https://identibyte.com/wordpress-plugin
+ * Description: Detect and block disposable email addresses in your Contact 7 Forms.
+ * Author: Identibyte
+ * Author URI: https://identibyte.com
+ * Version: 1.0.0
+*/
 
 /* Ensure Contact Form 7 is installed and activated. */
 add_action('admin_init', 'cf7_identibyte_validate_install');
+
 function cf7_identibyte_validate_install() {
     if (is_admin() &&
         current_user_can('activate_plugins') &&
@@ -37,8 +38,7 @@ function cf7_identibyte_validate_install_no_cf7() {
 <?php
 }
 
-
-/* Validate cf7 email and email* fields with Identibyte */
+/* Validate cf7 email/email* fields with Identibyte */
 add_filter('wpcf7_validate_email*', 'cf7_identibyte_validate_email_filter', 20, 2);
 add_filter('wpcf7_validate_email', 'cf7_identibyte_validate_email_filter', 20, 2);
 
@@ -65,7 +65,6 @@ function cf7_identibyte_validate_email_filter($result, $tag) {
 
     return $result;
 }
-
 
 /**
  * Make a check to the Identibyte API.  Return the full response.
@@ -118,19 +117,21 @@ function cf7_identibyte_add_to_admin_menu() {
 }
 
 function cf7_identibyte_render_admin_page() {
+    $identibyte_logo = plugin_dir_url(__FILE__) . "img/identibyte-logo-120x120.png"
+
 ?>
     <div class="wrap">
         <div class="message"></div>
         <br/>
         <h1>
             <img
-                src="https://identibyte.com/static/img/logo-120x120.png"
+                src="<?php echo $identibyte_logo; ?>"
                 width="35"
                 title="Identibyte logo"
                 alt="Identibyte logo"
                 style="vertical-align:middle;margin-right:10px"
             />
-            Identibyte for Contact Form 7 &middot Admin settings
+            Identibyte for Contact Form 7 &middot; Admin settings
         </h1>
         <br/>
         <div style="padding-left:50px">
