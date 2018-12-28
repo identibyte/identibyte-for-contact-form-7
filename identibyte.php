@@ -137,9 +137,9 @@ function cf7_identibyte_render_admin_page() {
         <div style="padding-left:50px">
             <a href="https://identibyte.com" target="_blank">Website</a>
             &middot
-            <a href="https://identibyte.com" target="_blank">Developer API</a>
+            <a href="https://identibyte.com/#docs" target="_blank">Developer API</a>
             &middot
-            <a href="https://identibyte.com" target="_blank">Plans</a>
+            <a href="https://identibyte.com/#plans" target="_blank">Plans</a>
         </div>
         <hr/>
         <div>

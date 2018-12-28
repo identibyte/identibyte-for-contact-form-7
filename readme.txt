@@ -15,16 +15,18 @@ disposable and fake email addresses in your Contact Form 7 forms.
 
 Identibyte for Contact Forms 7 will detect and block signups and
 submissions from disposable email addresses in your forms. Saving
-resources for your *real* users allows you to spend time and money on
-the users that need it.
+resources for *real* users allows you to spend time and money on the
+users that need it most.
 
-Setting it up is easy:
+Setting up is easy:
 
-1. Install the Identibyte for Contact Form 7 plugin
+1. Install the Identibyte for Contact Form 7 plugin.
 2. Enable Identibyte validation on any Contact Form 7 email tag.
 
-Optionally, you can add your Identibyte API token to enable more API
-requests. Learn more about these things below.
+You can use Identibyte for Contact Form 7 completely free without an
+Identibyte account and make 20 "checks" per hour. If you need more
+checks, you just need to sign up for Identibyte and create a free or
+upgraded API token. Learn more below.
 
 = How it works =
 
@@ -36,8 +38,9 @@ forms. All you need to do is add the `identibyte:true` option to any
 For example, like this: `[email* your-email identibyte:true]`
 
 When the form is submitted, Identibyte will check if the email is a
-**disposable email address**. A disposable email address is an email
-that matches an entry in Identibyte's blacklist.
+**disposable email address**. Identibyte has custom technology and
+processes for discovering and keeping a highly up-to-date blacklist of
+disposable email providers.
 
 And that's it! Now your signup forms are intelligent and can detect
 and block users signing up or submitting information that have a
@@ -53,10 +56,28 @@ and [create an API token](https://identibyte.com/dashboard/tokens).
 Once you have a token, enter it the Identibyte plugin's admin settings
 page.
 
+After the 20 checks per hour are exhausted, if you haven't entered an
+API token, Identibyte will be bypassed and will not fail the form
+submission validation.
+
+= What you need to know =
+
+Identibyte for Contact Form 7 relies on making HTTP requests to the
+[Identibyte API](https://identibyte.com). API calls are made when a
+Contact Form 7 form is submitted, for every field that has the
+`identibyte:true` option.
+
+Identibyte is an external service and has it's own
+[Terms of Service](https://identibyte.com/termsofservice) and
+[Privacy Policy](https://identibyte.com/privacypolicy), which you can
+review at those links.
+
 = Support =
 
-For any assistance, feel free to check out the [Identibyte
-website](https://identibyte.com) for helpful resources, or email us
+For any assistance, check out the
+[Identibyte website](https://identibyte.com) and
+[API documentation](https://identibyte.com/#docs) for helpful
+resources, or email us
 directly at admin@identibyte.com.
 
 === Screenshots ===
