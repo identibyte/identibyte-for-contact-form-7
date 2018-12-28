@@ -80,7 +80,7 @@ function cf7_identibyte_make_check($data) {
     ));
     $context = stream_context_create($options);
 
-    $url = "https://identibyte.com/check/" . $data . $api_token;
+    $url = esc_url("https://identibyte.com/check/" . $data . $api_token);
     $request = file_get_contents($url, false, $context);
     $response = json_decode($request);
 
