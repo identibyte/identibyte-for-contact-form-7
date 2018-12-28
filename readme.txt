@@ -21,9 +21,10 @@ the users that need it.
 Setting it up is easy:
 
 1. Install the Identibyte for Contact Form 7 plugin
-2. Enter your Identibyte token ([from your dashboard](https://identibyte.com/dashboard)).
-3. Enable Identibyte validation on any Contact Form 7 email tag.
+2. Enable Identibyte validation on any Contact Form 7 email tag.
 
+Optionally, you can add your Identibyte API token to enable more API
+requests. Learn more about these things below.
 
 = How it works =
 
@@ -41,6 +42,22 @@ that matches an entry in Identibyte's blacklist.
 And that's it! Now your signup forms are intelligent and can detect
 and block users signing up or submitting information that have a
 disposable email address.
+
+[Learn more about how Identibyte works here](https://identibyte.com).
+
+= Adding an API token =
+
+If you need to make more than 20 API requests an hour, you can
+[sign up for an Identibyte account]((https://identibyte.com/signup)
+and [create an API token](https://identibyte.com/dashboard/tokens).
+Once you have a token, enter it the Identibyte plugin's admin settings
+page.
+
+= Support =
+
+For any assistance, feel free to check out the [Identibyte
+website](https://identibyte.com) for helpful resources, or email us
+directly at admin@identibyte.com.
 
 === Screenshots ===
 
