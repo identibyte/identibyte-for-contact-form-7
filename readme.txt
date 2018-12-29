@@ -3,7 +3,7 @@ Author: Identibyte
 Contributors: Identibyte
 Tags: Identibyte, contact form 7, cf7, spam blocker, disposable email
 Requires at least: 3.0.1
-Tested up to: 4.9.7
+Tested up to: 5.0.2
 Stable tag: 1.0.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
